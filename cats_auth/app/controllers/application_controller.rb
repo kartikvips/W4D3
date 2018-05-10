@@ -14,13 +14,17 @@ class ApplicationController < ActionController::Base
       session[:session_token] = user.session_token
       redirect_to cats_url
     else
-      render new_session_url
+      redirect_to new_session_url
     end
 
   end
 
+  def cats_controller_in?
+    if !current_user
+      redirect_to cats_url
+    end
+  end
 
-  private
   def logged_in?
     if !!current_user
       redirect_to cats_url
